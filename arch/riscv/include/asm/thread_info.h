@@ -8,9 +8,9 @@
 #ifndef _ASM_RISCV_THREAD_INFO_H
 #define _ASM_RISCV_THREAD_INFO_H
 
-#include <asm/page.h>
 #include <linux/const.h>
 #include <linux/sizes.h>
+#include <linux/kconfig.h>
 
 /* thread information allocation */
 #ifdef CONFIG_KASAN
@@ -53,6 +53,8 @@
 struct thread_info {
 	unsigned long		flags;		/* low level flags */
 	int                     preempt_count;  /* 0=>preemptible, <0=>BUG */
+	int			cpu;
+	unsigned long		pcpu_offset;
 	/*
 	 * These stack pointers are overwritten on every system call or
 	 * exception.  SP is also saved to the stack it can be recovered when
@@ -60,7 +62,6 @@ struct thread_info {
 	 */
 	long			kernel_sp;	/* Kernel stack pointer */
 	long			user_sp;	/* User stack pointer */
-	int			cpu;
 	unsigned long		syscall_work;	/* SYSCALL_WORK_ flags */
 #ifdef CONFIG_SHADOW_CALL_STACK
 	void			*scs_base;

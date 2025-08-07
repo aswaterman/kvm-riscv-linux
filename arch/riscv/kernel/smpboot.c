@@ -200,6 +200,11 @@ int __cpu_up(unsigned int cpu, struct task_struct *tidle)
 	return ret;
 }
 
+void __init smp_prepare_boot_cpu(void)
+{
+	__my_cpu_offset = per_cpu_offset(smp_processor_id());
+}
+
 void __init smp_cpus_done(unsigned int max_cpus)
 {
 }
